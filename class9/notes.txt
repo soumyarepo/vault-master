@@ -1,0 +1,101 @@
+Vault Operator is a Kubernetes operator that simplifies the deployment, management, and operation of HashCorp's Vault, a popular secrets management tool. It provides a declarative way to manage Vault clusters, making it easier to integrate Vault with Kubernetes-based applications.
+
+Why is Vault Operator used?
+
+Vault Operator is used for several reasons:
+
+1. Vault Operator simplifies the process of deploying Vault clusters on Kubernetes, making it easier to get started with Vault.
+2.  Vault Operator provides a declarative way to configure Vault, allowing you to define the desired state of your Vault cluster and letting the operator manage the underlying resources.
+3.  Vault Operator automates the lifecycle management of Vault clusters, including scaling, upgrades, and backups.
+4. Vault Operator integrates Vault with Kubernetes, making it easier to use Vault with Kubernetes-based applications.
+5. By automating the management of Vault clusters, Vault Operator helps improve the security posture of your organization by reducing the risk of human error and ensuring consistent configuration.
+6.  Vault Operator provides built-in monitoring and logging capabilities, making it easier to troubleshoot and monitor your Vault cluster.
+7.  Vault Operator supports multiple versions of Vault, allowing you to choose the version that best fits your needs.
+--------------------------------------------------------------------------------------
+$ helm install vault . --version 0.20.0
+$ kubectl logs -f vault-1
+kubectl exec -it vault-1 /bin/sh
+
+vault operator init
+this command is used to initialize a Vault cluster using the  Operator.
+
+vault operator unseal ZaPvy6BwwXkKohuwLeZ1Wm7afxaz0mRkW4auubcdkuQj
+
+-----------------------------------------------------------------------------------------------------
+In Kubernetes, Liveness Probes and Readiness Probes are two types of health checks that help ensure the reliability and availability of your applications.
+
+Liveness Probe:
+
+A Liveness Probe is a diagnostic performed by Kubernetes to determine if a container is running and healthy. It checks whether the container is alive and functioning correctly. If the probe fails, Kubernetes will restart the container.
+
+The purpose of a Liveness Probe is to:
+
+1. Detect when a container is no longer running or has crashed.
+2. Restart the container to maintain the desired state.
+
+Liveness Probes are typically used to:
+
+* Check if a process is running inside the container.
+* Verify that a specific port is open and listening.
+* Perform a simple health check, such as checking the response code of an HTTP request.
+
+Example of a Liveness Probe:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  containers:
+  - name: my-app
+    image: my-app:latest
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+      initialDelaySeconds: 30
+      timeoutSeconds: 1
+
+In this example, the Liveness Probe checks if the container is responding to HTTP requests on port 8080. If the probe fails, Kubernetes will restart the container.
+
+Readiness Probe:
+
+A Readiness Probe is a diagnostic performed by Kubernetes to determine if a container is ready to receive traffic. It checks whether the container is ready to handle requests and is fully initialized.
+
+The purpose of a Readiness Probe is to:
+
+1. Ensure that a container is fully initialized and ready to handle requests.
+2. Prevent traffic from being sent to a container that is not yet ready.
+
+Readiness Probes are typically used to:
+
+* Check if a database connection is established.
+* Verify that a cache is warmed up.
+* Perform complex initialization tasks before accepting traffic.
+
+Example of a Readiness Probe:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  containers:
+  - name: my-app
+    image: my-app:latest
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      initialDelaySeconds: 30
+      timeoutSeconds: 1
+
+In this example, the Readiness Probe checks if the container is responding to HTTP requests on port 8080 and is ready to handle traffic. If the probe fails, Kubernetes will not send traffic to the container until it becomes ready.
+
+Key differences:
+
+* Liveness Probes focus on the container's health and restart it if it fails.
+* Readiness Probes focus on the container's readiness to handle traffic and prevent traffic from being sent if it's not ready.
+* Liveness Probes are used to detect and restart containers, while Readiness Probes are used to ensure containers are ready to handle traffic.
+
+By using Liveness Probes and Readiness Probes, you can ensure that your Kubernetes applications are reliable, scalable, and highly available

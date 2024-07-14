@@ -1,0 +1,15 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: "1.16.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
